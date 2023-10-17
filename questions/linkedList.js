@@ -29,3 +29,8 @@ If multiple nodes have the same value, remove the first encountered
     // add in the code you will use to test your LinkedList here,
     // then run `node path/to/linkedList.js`
 })();
+
+// a helper function to check things
+const assertEq = (got, want) => {
+    console.assert(got === want, JSON.stringify(got));
+}

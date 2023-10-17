@@ -31,6 +31,7 @@ class LinkedList {
             value: x,
             next: null,
         };
+        this.tail = this.head;
     }
 
     append(x) {
@@ -38,6 +39,11 @@ class LinkedList {
             value: x,
             next: null,
         };
+
+        if (this.length() === 0) {
+            this.head = newNode;
+            this.tail = newNode;
+        }
 
         if (this.length() === 1) {
             this.head.next = newNode;
@@ -136,4 +142,20 @@ class LinkedList {
     console.assert(ll.length() === 4, ll.length());
     console.log('==== After ====');
     console.log(JSON.stringify(ll));
+
+    console.log("PASSED\n")
+})();
+
+(function () {
+    console.log('edge cases');
+    const ll = new LinkedList(0);
+    ll.removeLowest();
+    ll.removeLowest();
+    console.assert(ll.length() === 0, ll.length());
+
+    // append to zero-length
+    ll.append(1);
+    console.assert(ll.head != null);
+    console.assert(ll.tail != null);
+    console.log("PASSED\n")
 })();
