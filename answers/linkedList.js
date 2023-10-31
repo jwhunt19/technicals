@@ -70,16 +70,14 @@ class LinkedList {
 
     // For part 2
     removeLowest() {
-        if (this.length() === 0) {
-            return;
-        }
-
-        if (this.length() === 1) {
+        // edge case
+        if (this.length() < 2) {
             this.head = null;
             this.tail = null;
             return;
         }
 
+        // satisfies edge case
         let lowest = this.head.value;
 
         // we don't need to keep track of the lowest node, we need
