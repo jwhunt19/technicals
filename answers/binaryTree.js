@@ -8,6 +8,7 @@ class BinaryTree {
     insert(val) {
         if (val > this.value) {
             if (this.right === null) {
+                // call the constructor so subclasses create instances of themselves, not a BinaryTree
                 this.right = new this.constructor(val);
                 return;
             }
@@ -18,16 +19,6 @@ class BinaryTree {
             return;
         }
         this.left.insert(val);
-
-        /*
-        shorter ternary:
-
-        if (val > this.value) {
-            this.right === null ? this.right = new BinaryTree(val) : this.right.insert(val);
-        }
-
-        and so on for left
-         */
     }
 
     searchDepth(val) {
@@ -57,16 +48,17 @@ class BinaryTreeTwo extends BinaryTree {
 
         // enqueue left, then right (via reassignment)
         if (this.left) {
-            queue = [this.left, ...queue]
+            queue = [this.left, ...queue];
         }
         if (this.right) {
-            queue = [this.right, ...queue]
+            queue = [this.right, ...queue];
         }
-        if (queue.length === 0) { // nothing more to search
+        if (queue.length === 0) {
+            // nothing more to search
             return null;
         }
 
-        return queue.pop().searchBreadth(val, queue)
+        return queue.pop().searchBreadth(val, queue);
     }
 }
 
@@ -84,7 +76,7 @@ class BinaryTreeTwo extends BinaryTree {
  */
 
 (() => {
-    console.log("BINARY TREE #1\n=============")
+    console.log('BINARY TREE #1\n=============');
     const tree = new BinaryTree(3);
     tree.insert(2);
     tree.insert(4);
@@ -97,7 +89,7 @@ class BinaryTreeTwo extends BinaryTree {
 })();
 
 (() => {
-    console.log("BINARY TREE #2\n=============")
+    console.log('BINARY TREE #2\n=============');
     const tree = new BinaryTreeTwo(3);
     tree.insert(2);
     tree.insert(4);
