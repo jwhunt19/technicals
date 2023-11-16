@@ -9,23 +9,24 @@ class BinaryTree {
 
     // check if placement is empty, otherwise recurse
     if (node.next[x] === undefined) {
-      node.next[x] = new BinaryTree(val)
+      node.next[x] = new this.constructor(val)
     } else {
       this.insert(val, node.next[x])
     }
   }
 
   // return the node that holds the val
-  searchDepth(val, node = this) {
-    if (node.val === val) return node // check if current node is target
+  searchDepth(val) {
+    console.log(this.val)
+    if (this.val === val) return this // check if current node is target
 
-    let x = val <= node.val ? 0 : 1; // check which child tree to go down
+    let x = val <= this.val ? 0 : 1; // check which child tree to go down
 
     // return null if end of tree, else check next node 
-    if (node.next[x] === undefined) {
+    if (this.next[x] === undefined) {
       return null
     } else {
-      return this.searchDepth(val, node.next[x])
+      return this.next[x].searchDepth(val)
     }
   }
 }
@@ -36,23 +37,46 @@ class BinaryTreeTwo extends BinaryTree {
     super(val)
   }
 
-  searchBreadth(val, queue = [this]) {
-    if (queue.length === 0) return null // check if the queue is empty
-
-    let node = queue.shift() // set next up in queue to variable
-    console.log(node.val)
-    if (node.val === val) return node // check if current node is target
-
+  searchBreadth(val, queue = []) {
+    console.log(this.val)
+    if (this.val === val) return this // check if current node is target
+    
     // add children nodes if they exist
-    node.next.forEach((n) => {
+    this.next.forEach((n) => {
       if (n !== undefined) queue.push(n)
     })
-
+  
+    if (queue.length === 0) return null // check if the queue is empty
     // return the search of the next node in queue
-    return this.searchBreadth(val, queue)
+    return queue[0].searchBreadth(val, queue.slice(1))
   }
 
 }
+
+(() => {
+  console.log('BINARY TREE #1\n=============');
+  const tree = new BinaryTree(3);
+  tree.insert(2);
+  tree.insert(4);
+  tree.insert(1);
+  tree.insert(3);
+  console.log(JSON.stringify(tree));
+
+  console.log(tree.searchDepth(1));
+  console.log(tree.searchDepth(5));
+})();
+
+(() => {
+  console.log('BINARY TREE #2\n=============');
+  const tree = new BinaryTreeTwo(3);
+  tree.insert(2);
+  tree.insert(4);
+  tree.insert(1);
+  tree.insert(3);
+
+  console.log(tree.searchBreadth(1));
+  console.log(tree.searchBreadth(5));
+})();
 
 
 /**
